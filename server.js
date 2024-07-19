@@ -3,12 +3,13 @@ const { createClient } = require("@supabase/supabase-js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 5000;
+const port = 3000;
 require("dotenv").config();
+const compression = require("compression");
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
-
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -78,6 +79,9 @@ app.get("/get-user", async (req, res) => {
     const {
       data: { user },
     } = await supabase.auth.getUser(authToken);
+    if (!user) {
+      throw new Error("supabase token is not valid");
+    }
 
     let { data: users, usererror } = await supabase.from("users").select("*").eq("uid", user.id);
 
