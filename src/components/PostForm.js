@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, FileInput, TextInput, Textarea } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { useCallback } from "react";
+
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 import { useQuill } from "react-quilljs";
@@ -19,7 +20,7 @@ const PostForm = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const selectLocalImage = () => {
+  const selectLocalImage = useCallback(() => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
@@ -46,19 +47,19 @@ const PostForm = () => {
       quill.insertEmbed(range.index, "image", imageUrl);
       setIsLoading(false);
     };
-  };
+  }, []);
 
-    useEffect(() => {
-      if (quill) {
-        quill.on("text-change", () => {
-          setContent(quill.root.innerHTML);
-        });
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        setContent(quill.root.innerHTML);
+      });
 
-        quill.getModule("toolbar").addHandler("image", () => {
-          selectLocalImage();
-        });
-      }
-    }, [quill]);
+      quill.getModule("toolbar").addHandler("image", () => {
+        selectLocalImage();
+      });
+    }
+  }, [quill, selectLocalImage]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
