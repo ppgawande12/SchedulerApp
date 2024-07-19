@@ -104,7 +104,7 @@ const NavbarMenu = () => {
             <Link to="/dashboard"> Dashboard</Link>
           </Navbar.Link>
 
-          <Navbar.Link to="/createpost">
+          <Navbar.Link >
             {" "}
             <Link to="/createpost"> Create New Post</Link>
           </Navbar.Link>
