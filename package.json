@@ -1,6 +1,6 @@
 {
     "scripts": {
-    "build": "babel src -d dist"
+   "start":"nodemon server.js"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.23.0",
