@@ -48,7 +48,8 @@ function Login() {
 
       toast.success("Login Successful");
       setTimeout(() => {
-        window.location.href = "/dashboard";
+        // window.location.href = "/dashboard";
+        navigate("/dashboard");
       }, 2000);
     } catch (error) {
       toast.error(error.message);
