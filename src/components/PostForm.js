@@ -58,7 +58,7 @@ const PostForm = () => {
           selectLocalImage();
         });
       }
-    }, [quill, selectLocalImage]);
+    }, [quill]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
