@@ -8,7 +8,6 @@ function App() {
   return (
     <>
       <h1 className=" flex justify-center text-3xl mt-5 font-mono font-bold">Scheduler App</h1>
-
       <RoutesFunction />
     </>
   );
