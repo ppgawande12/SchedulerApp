@@ -38,17 +38,7 @@ const PostForm = () => {
         method: "POST",
         body: formData,
       });
-      useEffect(() => {
-        if (quill) {
-          quill.on("text-change", () => {
-            setContent(quill.root.innerHTML);
-          });
 
-          quill.getModule("toolbar").addHandler("image", () => {
-            selectLocalImage();
-          });
-        }
-      }, [quill, selectLocalImage]);
       const data = await response.json();
       const imageUrl = data.url;
 
@@ -57,6 +47,18 @@ const PostForm = () => {
       setIsLoading(false);
     };
   };
+
+    useEffect(() => {
+      if (quill) {
+        quill.on("text-change", () => {
+          setContent(quill.root.innerHTML);
+        });
+
+        quill.getModule("toolbar").addHandler("image", () => {
+          selectLocalImage();
+        });
+      }
+    }, [quill, selectLocalImage]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
