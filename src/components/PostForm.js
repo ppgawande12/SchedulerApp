@@ -18,17 +18,6 @@ const PostForm = () => {
   const [scheduleTime, setScheduleTime] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    if (quill) {
-      quill.on("text-change", () => {
-        setContent(quill.root.innerHTML);
-      });
-
-      quill.getModule("toolbar").addHandler("image", () => {
-        selectLocalImage();
-      });
-    }
-  }, [quill]);
 
   const selectLocalImage = () => {
     const input = document.createElement("input");
@@ -49,7 +38,17 @@ const PostForm = () => {
         method: "POST",
         body: formData,
       });
+      useEffect(() => {
+        if (quill) {
+          quill.on("text-change", () => {
+            setContent(quill.root.innerHTML);
+          });
 
+          quill.getModule("toolbar").addHandler("image", () => {
+            selectLocalImage();
+          });
+        }
+      }, [quill, selectLocalImage]);
       const data = await response.json();
       const imageUrl = data.url;
 
