@@ -1,6 +1,6 @@
 {
     "scripts": {
-    "build": "npm run build"
+    "build": "babel src -d dist"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.23.0",
