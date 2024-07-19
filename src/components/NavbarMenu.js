@@ -3,9 +3,11 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import cookieValue from "./get_access_token";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 const NavbarMenu = () => {
   const [userData, setUserData] = useState("");
-const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
+  const navigate = useNavigate();
+  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
   useEffect(() => {
     const getData = async (e) => {
       try {
@@ -48,7 +50,7 @@ const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
       toast.success(result.message);
       document.cookie = `access_token=;`;
       setTimeout(() => {
-        window.location.href = "/login";
+        navigate("/login");
       }, 2000);
     } catch (error) {
       console.log(error);
@@ -98,11 +100,14 @@ const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
-          <Navbar.Link href="/dashboard" active>
-            Dashboard
+          <Navbar.Link>
+            <Link to="/dashboard"> Dashboard</Link>
           </Navbar.Link>
 
-          <Navbar.Link href="/createpost">Create New Post</Navbar.Link>
+          <Navbar.Link to="/createpost">
+            {" "}
+            <Link to="/createpost"> Create New Post</Link>
+          </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
     </>

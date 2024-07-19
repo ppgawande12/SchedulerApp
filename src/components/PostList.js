@@ -2,9 +2,10 @@ import { Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import cookieValue from "./get_access_token";
 import NavbarMenu from "./NavbarMenu";
-
+import { useNavigate } from "react-router-dom";
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+    const navigate = useNavigate();
 const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
   useEffect(() => {
     const getData = async () => {

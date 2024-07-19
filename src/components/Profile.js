@@ -53,7 +53,7 @@ const Profile = () => {
       document.cookie = `access_token=;`;
       setTimeout(() => {
         navigate("/login");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.log(error);
       toast.error(error.message);

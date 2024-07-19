@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, FileInput, TextInput, Textarea } from "flowbite-react";
-import { useCallback } from "react";
 
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
@@ -10,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import cookieValue from "./get_access_token";
 import NavbarMenu from "./NavbarMenu";
 import "./loader.css";
+import { useNavigate } from "react-router-dom";
 const PostForm = () => {
   const { quill, quillRef } = useQuill();
   const [title, setTitle] = useState("");
@@ -18,9 +18,11 @@ const PostForm = () => {
   const [scheduleDate, setScheduleDate] = useState("");
   const [scheduleTime, setScheduleTime] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
-  const selectLocalImage = useCallback(() => {
+
+  const selectLocalImage = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
@@ -47,7 +49,7 @@ const PostForm = () => {
       quill.insertEmbed(range.index, "image", imageUrl);
       setIsLoading(false);
     };
-  }, []);
+  };
 
   useEffect(() => {
     if (quill) {
@@ -59,7 +61,7 @@ const PostForm = () => {
         selectLocalImage();
       });
     }
-  }, [quill, selectLocalImage]);
+  }, [quill]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,8 +90,8 @@ const PostForm = () => {
       toast.success("Post created successfully." + result);
       setTimeout(() => {
         toast.success("Check your post in dashboard section");
-        window.location.href = "/dashboard";
-      }, 1000);
+        navigate("/dashboard");
+      }, 2000);
     } catch (error) {
       toast.error(error.message);
     }
