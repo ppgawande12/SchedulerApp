@@ -2,8 +2,7 @@ import "./App.css";
 import { Button } from "flowbite-react";
 
 import RoutesFunction from "./components/RoutesFunction";
-// import { Link } from "react-router-dom";
-import Scheduler from "./components/Scheduler";
+
 
 function App() {
   return (
