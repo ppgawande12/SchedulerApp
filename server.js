@@ -1,18 +1,11 @@
-import express from "express";
-import { createClient } from "@supabase/supabase-js";
-import cors from "cors";
-import bodyParser from "body-parser";
-import nodemailer from "nodemailer";
-import cron from "node-cron";
-import { config } from "dotenv";
-import compression from "compression";
-import { BlobServiceClient } from "@azure/storage-blob";
-
-config();
-
+const express = require("express");
+const { createClient } = require("@supabase/supabase-js");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
-
+require("dotenv").config();
+const compression = require("compression");
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -23,9 +16,11 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // create a new post
 const multer = require("multer");
-
+const { BlobServiceClient } = require("@azure/storage-blob");
 const upload = multer({ storage: multer.memoryStorage() });
-
+const nodemailer = require("nodemailer");
+const cron = require("node-cron");
+const { config } = require("dotenv");
 //sent email
 const transporter = nodemailer.createTransport({
   service: "gmail",
