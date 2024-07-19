@@ -1,10 +1,10 @@
 "use client";
 
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
 import IndexPage from "./IndexPage";
-import Scheduler from "./Scheduler";
+
 import PostList from "./PostList";
 import PostForm from "./PostForm";
 
