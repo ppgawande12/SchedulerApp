@@ -1,4 +1,7 @@
 {
+    "scripts": {
+    "build": "npm run build"
+  },
   "dependencies": {
     "@azure/storage-blob": "^12.23.0",
     "@supabase/supabase-js": "^2.44.4",
