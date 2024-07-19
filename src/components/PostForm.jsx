@@ -23,6 +23,7 @@ const PostForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
 
+  
   const selectLocalImage = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
