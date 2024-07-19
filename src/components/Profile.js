@@ -7,12 +7,13 @@ import cookieValue from "./get_access_token";
 import NavbarMenu from "./NavbarMenu";
 
 const Profile = () => {
+  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
   const [userData, setUserData] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const getData = async (e) => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}get-user`, {
+        const response = await fetch(`${REACT_APP_API_URL}get-user`, {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -35,7 +36,7 @@ const Profile = () => {
 
   const handdleLogout = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}logout`, {
+      const response = await fetch(`${REACT_APP_API_URL}logout`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

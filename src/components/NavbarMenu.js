@@ -5,11 +5,11 @@ import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 const NavbarMenu = () => {
   const [userData, setUserData] = useState("");
-
+const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
   useEffect(() => {
     const getData = async (e) => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}get-user`, {
+        const response = await fetch(`${REACT_APP_API_URL}get-user`, {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -32,7 +32,7 @@ const NavbarMenu = () => {
 
   const handdleLogout = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}logout`, {
+      const response = await fetch(`${REACT_APP_API_URL}logout`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

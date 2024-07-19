@@ -5,11 +5,11 @@ import NavbarMenu from "./NavbarMenu";
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
-
+const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}posts`, {
+        const response = await fetch(`${REACT_APP_API_URL}posts`, {
           method: "GET",
           headers: {
             "content-type": "application/json",

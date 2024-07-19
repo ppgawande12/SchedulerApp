@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function Login() {
+  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,7 +25,7 @@ function Login() {
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + 1);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}login`, {
+      const response = await fetch(`${REACT_APP_API_URL}login`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

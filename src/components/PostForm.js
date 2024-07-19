@@ -19,7 +19,7 @@ const PostForm = () => {
   const [scheduleTime, setScheduleTime] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
   const selectLocalImage = useCallback(() => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -33,7 +33,7 @@ const PostForm = () => {
       formData.append("file", file);
       // console.log(file);
       // Replace with your upload URL
-      const uploadUrl = `${process.env.REACT_APP_API_URL}upload`;
+      const uploadUrl = `${REACT_APP_API_URL}upload`;
 
       const response = await fetch(uploadUrl, {
         method: "POST",
@@ -64,7 +64,7 @@ const PostForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}posts`, {
+      const response = await fetch(`${REACT_APP_API_URL}posts`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
