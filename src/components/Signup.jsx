@@ -71,7 +71,7 @@ function SignUp() {
         <h1 className="text-2xl text-center"> Sign Up </h1>
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="fname" value="Your email" />
+            <Label htmlFor="fname" value="Your First Name" />
           </div>
           <TextInput
             value={formData.fname}
@@ -85,7 +85,7 @@ function SignUp() {
         </div>
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="lname" value="Your email" />
+            <Label htmlFor="lname" value="Your Last Name" />
           </div>
           <TextInput
             id="lname"
