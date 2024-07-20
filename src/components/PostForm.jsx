@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, TextInput } from "flowbite-react";
 // import { useQuill } from "react-quilljs";
 // import "quill/dist/quill.snow.css";
+
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { toast, ToastContainer } from "react-toastify";
 import cookieValue from "./get_access_token";
 import NavbarMenu from "./NavbarMenu";
@@ -20,55 +23,83 @@ const PostForm = () => {
 
   const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
 
-  // const selectLocalImage = () => {
-  //   const input = document.createElement("input");
-  //   input.setAttribute("type", "file");
-  //   input.setAttribute("accept", "image/*");
-  //   input.click();
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "color",
+  ];
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+  const quillRef = useRef(null);
 
-  //   input.onchange = async () => {
-  //     if (input.files && input.files[0]) {
-  //       setIsLoading(true);
-  //       const file = input.files[0];
-  //       const formData = new FormData();
-  //       formData.append("file", file);
-  //       const uploadUrl = `${REACT_APP_API_URL}upload`;
+  useEffect(() => {
+    console.log(content);
+    const quill = quillRef.current?.getEditor();
+    if (quill) {
+      quill.on("text-change", () => {
+        setContent(quill.root.innerHTML);
+      });
+      quill.getModule("toolbar").addHandler("image", selectLocalImage);
+    }
+  }, [content]);
 
-  //       try {
-  //         const response = await fetch(uploadUrl, {
-  //           method: "POST",
-  //           body: formData,
-  //         });
+  const selectLocalImage = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
 
-  //         if (!response.ok) {
-  //           throw new Error("Image upload failed.");
-  //         }
+    input.onchange = async () => {
+      if (input.files && input.files[0]) {
+        setIsLoading(true);
+        const file = input.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        const uploadUrl = `${REACT_APP_API_URL}upload`;
 
-  //         const data = await response.json();
-  //         const imageUrl = data.url;
+        try {
+          const response = await fetch(uploadUrl, {
+            method: "POST",
+            body: formData,
+          });
 
-  //         const range = quill.getSelection();
-  //         quill.insertEmbed(range.index, "image", imageUrl);
-  //       } catch (error) {
-  //         toast.error(error.message);
-  //       } finally {
-  //         setIsLoading(false);
-  //       }
-  //     }
-  //   };
-  // };
+          if (!response.ok) {
+            throw new Error("Image upload failed.");
+          }
 
-  // useEffect(() => {
-  //   if (quill) {
-  //     quill.on("text-change", () => {
-  //       setContent(quill.root.innerHTML);
-  //     });
-
-  //     quill.getModule("toolbar").addHandler("image", () => {
-  //       selectLocalImage();
-  //     });
-  //   }
-  // }, [quill]);
+          const data = await response.json();
+          const imageUrl = data.url;
+          const quill = quillRef.current.getEditor();
+          const range = quill.getSelection();
+          quill.insertEmbed(range.index, "image", imageUrl);
+        } catch (error) {
+          toast.error(error.message);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,7 +108,7 @@ const PostForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${cookieValue}`,
+          Authorization: cookieValue,
         },
         body: JSON.stringify({
           title,
@@ -88,12 +119,12 @@ const PostForm = () => {
           scheduleTime,
         }),
       });
-
+      const result = await response.json();
+      console.log(result);
       if (!response.ok) {
         throw new Error("Failed to create post.");
       }
 
-      const result = await response.json();
       toast.success("Post created successfully.");
       setTimeout(() => {
         toast.success("Check your post in the dashboard section.");
@@ -158,6 +189,14 @@ const PostForm = () => {
         </label>
         <div className="h-96 mb-3">
           {/* <div ref={quillRef} /> */}
+          <ReactQuill
+            ref={quillRef}
+            theme="snow"
+            modules={modules}
+            formats={formats}
+            value={content}
+            onChange={setContent}
+          />
         </div>
 
         <div className="mt-20">
