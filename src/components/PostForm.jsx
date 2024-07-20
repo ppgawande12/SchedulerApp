@@ -187,7 +187,7 @@ const PostForm = () => {
         >
           Post Content
         </label>
-        <div className="h-96 mb-3">
+        <div className="h-96 overflow-scroll">
           {/* <div ref={quillRef} /> */}
           <ReactQuill
             ref={quillRef}
@@ -196,10 +196,12 @@ const PostForm = () => {
             formats={formats}
             value={content}
             onChange={setContent}
+            className="h-96
+            "
           />
         </div>
 
-        <div className="mt-20">
+        <div className="mt-5">
           <label
             htmlFor="email"
             className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
