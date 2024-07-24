@@ -11,7 +11,7 @@ require("dotenv").config();
 const { ObjectId } = require("mongodb");
 const app = express();
 const port = 5000;
-const NodeCache = require("node-cache");
+
 app.use(compression());
 app.use(cors());
 app.use(express.json());
@@ -29,8 +29,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-
-const cache = new NodeCache({ stdTTL: 60 * 60, checkperiod: 60 * 10 });
 
 const sendEmail = async (to, subject, text) => {
   const mailOptions = {
@@ -133,12 +131,7 @@ app.post("/posts", authenticateToken, async (req, res) => {
 //get post
 app.get("/posts", authenticateToken, async (req, res) => {
   try {
-    const cacheKey = `posts_${req.user}`;
-    let posts = cache.get(cacheKey);
-    if (!posts) {
-      posts = await postsCollection.find({ userId: req.user }).toArray();
-      cache.set(cacheKey, posts);
-    }
+    const posts = await postsCollection.find({ userId: req.user }).toArray();
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);
@@ -150,19 +143,11 @@ app.get("/posts", authenticateToken, async (req, res) => {
 app.get("/get-user", authenticateToken, async (req, res) => {
   try {
     const userId = new ObjectId(req.user);
-    const cacheKey = `user_${userId}`;
-    let user = cache.get(cacheKey);
-    if (!user) {
-      user = await usersCollection.findOne({ _id: userId });
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-      cache.set(cacheKey, user); // Cache the user
-    }
+    const user = await usersCollection.find({ _id: userId }).toArray();
     res.status(200).json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error fetching user" });
+    res.status(500).json({ error: "User Not Found" });
   }
 });
 
