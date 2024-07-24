@@ -9,6 +9,10 @@ const client = new MongoClient(uri, {
     strict: true,
     deprecationErrors: true,
     tls: true,
+    ssl: true,
+    tlsAllowInvalidCertificates: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   },
 });
 
@@ -22,5 +26,5 @@ async function run() {
   } finally {
   }
 }
-
+// run();
 module.exports = { run, client };
