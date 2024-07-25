@@ -1,14 +1,14 @@
-const express = require("express");
-const cors = require("cors");
-const compression = require("compression");
-const multer = require("multer");
-const { BlobServiceClient } = require("@azure/storage-blob");
-const nodemailer = require("nodemailer");
-const cron = require("node-cron");
-const bcrypt = require("bcrypt");
-const { run, client } = require("./mongodb");
-require("dotenv").config();
-const { ObjectId } = require("mongodb");
+import express from "express";
+import cors from "cors";
+import compression from "compression";
+import multer from "multer";
+import { BlobServiceClient } from "@azure/storage-blob";
+import nodemailer from "nodemailer";
+import cron from "node-cron";
+import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
+// import { run, client } from "./mongodb";
+import "dotenv/config";
+import client, { run } from "./mongodb.js";
 const app = express();
 const port = 5000;
 
@@ -25,8 +25,8 @@ const postsCollection = db.collection("Posts");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: Deno.env.get("EMAIL_USER"),
+    pass: Deno.env.get("EMAIL_PASS"),
   },
 });
 
@@ -56,7 +56,9 @@ const scheduleEmail = (to, subject, text, date) => {
   return `Email scheduled for ${date}`;
 };
 
-const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_BLOB_URL);
+const blobServiceClient = BlobServiceClient.fromConnectionString(
+  Deno.env.get("AZURE_BLOB_URL") || process.env.AZURE_BLOB_URL
+);
 const containerClient = blobServiceClient.getContainerClient("postimages");
 const upload = multer({ storage: multer.memoryStorage() });
 
