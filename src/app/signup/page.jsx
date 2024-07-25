@@ -46,9 +46,8 @@ function SignUp() {
       if (!response.ok) {
         throw new Error(result.error);
       }
-      document.cookie = `access_token=${
-        result.insertedId
-      }; expires=${expirationDate.toUTCString()}; path=/`;
+
+      const cookie = Cookies.set("access_token", result.insertedId);
 
       toast.success("Account Create Successfuly");
       router.push("/dashboard");

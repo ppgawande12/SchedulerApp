@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Cookies from "js-cookie";
 function Login() {
   const router = useRouter();
   const REACT_APP_API_URL = "https://schedule-rapp.onrender.com";
@@ -25,10 +25,9 @@ function Login() {
   const submit = useCallback(
     async (e) => {
       e.preventDefault();
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 1);
       console.log("click");
       try {
+        console.log("click");
         const response = await fetch(`${REACT_APP_API_URL}/login`, {
           method: "POST",
           headers: {
@@ -45,9 +44,7 @@ function Login() {
           throw new Error(result.error);
         }
 
-        document.cookie = `access_token=${
-          result.user._id
-        }; expires=${expirationDate.toUTCString()}; path=/`;
+        const cookie = Cookies.set("access_token", result.user._id);
 
         toast.success("Login Successful");
         setTimeout(() => {
