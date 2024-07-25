@@ -56,9 +56,7 @@ const scheduleEmail = (to, subject, text, date) => {
   return `Email scheduled for ${date}`;
 };
 
-const blobServiceClient = BlobServiceClient.fromConnectionString(
-  Deno.env.get("AZURE_BLOB_URL") || process.env.AZURE_BLOB_URL
-);
+const blobServiceClient = BlobServiceClient.fromConnectionString(Deno.env.get("AZURE_BLOB_URL"));
 const containerClient = blobServiceClient.getContainerClient("postimages");
 const upload = multer({ storage: multer.memoryStorage() });
 

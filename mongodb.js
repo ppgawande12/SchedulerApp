@@ -3,7 +3,7 @@ config();
 
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-const uri = Deno.env.get("MONGODB_URL")||process.env.MONGODB_URL;
+const uri = Deno.env.get("MONGODB_URL");
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
