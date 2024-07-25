@@ -77,14 +77,18 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 //signup
 app.post("/register", async (req, res) => {
   const { email, password, first_name, last_name } = req.body;
+
   try {
+    const user = await usersCollection.findOne({ email });
+    if (user) {
+      throw new Error("user email allredy exist");
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = { email, password: hashedPassword, first_name, last_name };
     const result = await usersCollection.insertOne(newUser);
     res.status(201).json(result);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error registering user" });
+    res.status(500).json({ error: error.message });
   }
 });
 
