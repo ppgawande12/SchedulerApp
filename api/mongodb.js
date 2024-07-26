@@ -1,9 +1,8 @@
-import { config } from "dotenv";
-config();
+require("dotenv").config();
 
-import { MongoClient, ServerApiVersion } from "mongodb";
+const { MongoClient, ServerApiVersion } = require("mongodb");
 
-const uri = Deno.env.get("MONGODB_URL");
+const uri = process.env.MONGODB_URL;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -17,7 +16,7 @@ const client = new MongoClient(uri, {
   },
 });
 
-export async function run() {
+async function run() {
   try {
     await client.connect();
     await client.db("admin").command({ ping: 1 });
@@ -27,5 +26,5 @@ export async function run() {
   } finally {
   }
 }
-
-export default client;
+// run();
+module.exports = { run, client };
