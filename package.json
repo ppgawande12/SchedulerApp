@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon app/index.js"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.23.0",
