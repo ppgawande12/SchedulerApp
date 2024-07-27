@@ -20,7 +20,7 @@ const PostForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fileInput, setFileInput] = useState(null);
 
-  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
+  const REACT_APP_API_URL = "https://scheduale-api.azurewebsites.net/";
 
   const formats = [
     "header",

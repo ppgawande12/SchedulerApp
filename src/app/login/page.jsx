@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 function Login() {
   const router = useRouter();
-  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com";
+  const REACT_APP_API_URL = "https://scheduale-api.azurewebsites.net";
   const [formData, setFormData] = useState({
     email: "",
     password: "",

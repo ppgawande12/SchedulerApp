@@ -14,7 +14,7 @@ function SignUp() {
     email: "",
     password: "",
   });
-  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
+  const REACT_APP_API_URL = "https://scheduale-api.azurewebsites.net/";
   const handdleChange = (e) => {
     const { name, value } = e.target;
     setFormData((pre) => ({

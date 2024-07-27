@@ -9,7 +9,7 @@ import cookieValue from "./get_accsses_token";
 const NavbarMenu = () => {
   const [userData, setUserData] = useState("");
 
-  const REACT_APP_API_URL = "https://schedule-rapp.onrender.com/";
+  const REACT_APP_API_URL = "https://scheduale-api.azurewebsites.net/";
   useEffect(() => {
     const getData = async (e) => {
       try {

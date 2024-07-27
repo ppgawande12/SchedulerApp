@@ -10,7 +10,7 @@ const PostList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const REACT_APP_API_URL = useMemo(() => "https://schedule-rapp.onrender.com", []);
+  const REACT_APP_API_URL = useMemo(() => "https://scheduale-api.azurewebsites.net", []);
   const authorization = useMemo(() => cookieValue, []);
 
   useEffect(() => {
