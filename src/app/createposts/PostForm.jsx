@@ -67,7 +67,7 @@ const PostForm = () => {
       const file = event.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      const uploadUrl = `${REACT_APP_API_URL}upload`;
+      const uploadUrl = `https://schedule-rapp.onrender.com/upload`;
 
       try {
         const response = await fetch(uploadUrl, {
@@ -80,12 +80,15 @@ const PostForm = () => {
         }
 
         const data = await response.json();
-        const imageUrl = data.url;
+        console.log(data)
+        // const imageUrl = data.url;
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection();
+        // console.log(range)
         quill.insertEmbed(range.index, "image", imageUrl);
       } catch (error) {
-        toast.error(error.message);
+        console.log(error.message)
+        toast.error("image upload fail please reupload image");
       } finally {
         setIsLoading(false);
       }
