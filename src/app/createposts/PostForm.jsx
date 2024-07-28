@@ -81,7 +81,7 @@ const PostForm = () => {
 
         const data = await response.json();
         console.log(data)
-        // const imageUrl = data.url;
+        const imageUrl = data.url;
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection();
         // console.log(range)
