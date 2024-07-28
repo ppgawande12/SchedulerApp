@@ -85,7 +85,8 @@ const PostForm = () => {
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection();
         // console.log(range)
-        quill.insertEmbed(range.index, "image", imageUrl);
+        if(range){
+        quill.insertEmbed(range.index, "image", imageUrl);}
       } catch (error) {
         console.log(error.message)
         toast.error("image upload fail please reupload image");
